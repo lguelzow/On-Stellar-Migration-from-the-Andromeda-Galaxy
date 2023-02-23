@@ -21,9 +21,9 @@ the position and velocity of Andromeda in the past.
 Next, the differential equations are defined as a function. As previously mentioned, we use the system of ordinary differential equations given by Eq. (\ref{DEs}).
 For the acceleration we use what we established in Eq. (\ref{a_and}). The magnitude of the position vector is calculated every time the function is called since 
 it is needed for the calculation of the acceleration. After the function is defined, ODEint is called and given the initial conditions, time interval and the 
-function containing the DEs. ODEint calls the DE function in every step of the time interval. It uses integrates the velocity and acceleration components 
+function containing the DEs. ODEint calls the DE function in every step of the time interval. It integrates the velocity and acceleration components 
 calculated from the position and velocity vector from the previous step to find the position and velocity vector at the current time step. For the first step,
-it integrates the values calculated from the initial vectors.
+it uses the values calculated from the initial vectors.
 At the end, \textit{ODEint} returns an array containing the position and velocity vectors of Andromeda at every step of the time interval. The results are written
 into the data file "M31-trajectory.txt". The main file of the simulation uses this data file to interpolate functions of the position and velocity of Andromeda 
 depending on time.
