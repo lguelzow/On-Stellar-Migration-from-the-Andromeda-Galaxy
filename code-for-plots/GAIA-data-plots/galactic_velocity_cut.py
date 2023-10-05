@@ -44,17 +44,22 @@ limits = 50
 '''CALCULATE ZERO-POINT PARALLAX'''
 #
 
+print("Reading input .csv file...)
 # read data from input .csv file
 data = pd.read_csv(args.path[0])
 
 # load coefficient tables
 zpt.load_tables()
 
+print("Calculating zero-point parallaxes...")
+
 # calculate zero-point parallax with panda wrapper
 zero_point = data.apply(zpt.zpt_wrapper,axis=1)
 
 # add zero-point parallax column to data frame
 data['parallax_zpt'] = zero_point
+
+print("Dropping photometry data...")
 
 # drop unnecessary data for further analysis
 data.drop('phot_g_mean_mag', axis=1, inplace=True)
@@ -71,7 +76,7 @@ data.drop('astrometric_params_solved', axis=1, inplace=True)
 '''READ-OUT DATA FILES: '''
 #
 
-print("Data columns in panda frame", data.columns)
+print("remaining data columns in panda frame", data.columns)
 
 print("Reading input Gaia data into np.arrays...")
 
