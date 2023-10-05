@@ -17,13 +17,17 @@ parser.add_argument('path', metavar='PATH', type=str, nargs='*', default=[],
 # put path to data file into convenient variable
 args = parser.parse_args()
 
+# generate error when no input file given
+if len(args.path) == 0:
+    sys.exit("No input file(s)! Abort...")
+
 
 # CONSTANTS
 
 # define constants needed for performing the calculations for the data cut
 
 # velocity for which to filter
-filter_velocity = 500
+filter_velocity = 0
 
 # define constant for transformation from mas/yr to km/s
 mas_trafo = 4.744213026
@@ -41,7 +45,7 @@ limits = 50
 #
 
 # read data from input .csv file
-data = pd.read_csv(args.path)
+data = pd.read_csv(args.path[0])
 
 # load coefficient tables
 zpt.load_tables()
@@ -368,7 +372,7 @@ print(len(parallax_filter))
 
 # produce a shorter file for long GAIA data files with only the fast stars
 np.savetxt("Revision_GAIA_with zpt.csv", [])
-f = open("Revision_GAIA_with_zpt.csv", "w")
+f = open("Revision_GAIA_with zpt.csv", "w")
 
 # write labels into first lines
 f.write("Standin-for-sourceID" + "," + "parallax" + "," + "parallax_zpt" + "," + "ra" + "," + "dec" + "," + "pmra" + "," + "pmdec" + "," + "radial_velocity" + "," +
