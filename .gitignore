@@ -1,1 +1,4 @@
- *.csv
+# type of files to ignore
+*.csv
+*.pdf
+*.png
