@@ -1,0 +1,13 @@
+SELECT source_id, parallax, ra, dec, pmra, pmdec,radial_velocity, parallax_error, ra_error, dec_error, pmra_error, pmdec_error, radial_velocity_error, phot_g_mean_mag, nu_eff_used_in_astrometry, pseudocolour, ecl_lat, astrometric_params_solved
+FROM gaiadr3.gaia_source
+WHERE parallax >= 0.02
+AND ruwe < 1.4
+AND rv_nb_transits > 10
+AND rv_expected_sig_to_noise >= 5
+AND abs(parallax) > 2 * parallax_error
+AND abs(pmra) > 5 * pmra_error
+AND abs(pmdec) > 5 * pmdec_error
+AND abs(radial_velocity) > 5 * radial_velocity_error
+AND sqrt(power(radial_velocity, 2)
++ power((pmra / parallax) * 4.744213026, 2)
++ power((pmdec / parallax) * 4.744213026, 2)) >= 150
