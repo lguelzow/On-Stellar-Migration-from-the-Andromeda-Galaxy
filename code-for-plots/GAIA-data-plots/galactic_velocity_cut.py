@@ -1,54 +1,82 @@
-import matplotlib
-import matplotlib.pyplot as plt
-from matplotlib.ticker import PercentFormatter
-
+import argparse
 import numpy as np
 import pandas as pd
-
-import astropy
-import healpy as hp
 import sys
-import scipy.stats
+
 from astropy.coordinates import SkyCoord
-import astropy.units as u
-from mpl_toolkits.mplot3d import Axes3D
+from zero_point import zpt # install with "pip install gaiadr3-zeropoint"
+
+# start command line argument parser for .csv input data file
+parser = argparse.ArgumentParser(description='')
+
+# parser asks for path to input file in .csv format
+parser.add_argument('path', metavar='PATH', type=str, nargs='*', default=[],
+                    help='Choose csv input file with Gaia photometric \
+                information in addition to full-phase-space solutions.')
+
+# put path to data file into convenient variable
+args = parser.parse_args()
 
 
 # CONSTANTS
 
+# define constants needed for performing the calculations for the data cut
+
 # velocity for which to filter
-filter_velocity = 0
+filter_velocity = 500
 
 # define constant for transformation from mas/yr to km/s
 mas_trafo = 4.744213026
 
 # define sun velocity vector
 sun_vel = [11.1, 12.24 + 240, 7.25]
-LSR = [0, 240, 0]
 
 # limits of 3D graph axes
 limits = 50
+
+
+
+#
+'''CALCULATE ZERO-POINT PARALLAX'''
+#
+
+# read data from input .csv file
+data = pd.read_csv(args.path)
+
+# load coefficient tables
+zpt.load_tables()
+
+# calculate zero-point parallax with panda wrapper
+zero_point = data.apply(zpt.zpt_wrapper,axis=1)
+
+# add zero-point parallax column to data frame
+data['parallax_zpt'] = zero_point
+
+# drop unnecessary data for further analysis
+data.drop('phot_g_mean_mag', axis=1, inplace=True)
+data.drop('nu_eff_used_in_astrometry', axis=1, inplace=True)
+data.drop('pseudocolour', axis=1, inplace=True)
+data.drop('ecl_lat', axis=1, inplace=True)
+data.drop('astrometric_params_solved', axis=1, inplace=True)
+
+# write new data column into new file
+# data.to_csv('Gaia_data_with_zpt_parallax.csv', encoding='utf-8')
 
 
 #
 '''READ-OUT DATA FILES: '''
 #
 
-# readout process nr 1
-# Read out the data of all minimum distances from the file
-# comment in whichecer you need
+print("Data columns in panda frame", data.columns)
 
-data = pd.read_csv('/home/lguelzow/Nextcloud/MA/MA_Paper/GAIA/parallax-zero-point/Revision_GAIA_only_fast_test.csv')
-# data = pd.read_csv('/home/lguelzow/Nextcloud/MA/MA_Paper/GAIA/190_25percent_error/error33_v_150-result.csv')
-# data = pd.read_csv('/home/lguelzow/Nextcloud/MA/MA_Paper/GAIA/400kms-analysis/test2.csv')
-
-print(data.columns)
-
-print("Reading data into np.arrays...")
+print("Reading input Gaia data into np.arrays...")
 
 # read out data colums into np arrays
+# inaccurate bc of parallax offset and big errors 
+# parallax is filtered for later and correct distance is calculated in plot file
 distance = np.array(data.parallax) ** (-1)
 
+# parallaxes with offset and errors
 parallax = np.array(data.parallax)
 
 parallax_zpt = np.array(data.parallax_zpt)
@@ -68,10 +96,12 @@ parallax_criterion = parallax_error / parallax_corr
 # print("Parallax criterion \n", parallax_criterion[0:10])
 
 
+# radial velocity with errors
 radial_velocity = np.array(data.radial_velocity)
 
 radial_velocity_error = np.array(data.radial_velocity_error)
 
+# proper motions with errors
 pm_ra = np.array(data.pmra)
 
 pm_ra_error = np.array(data.pmra_error)
@@ -80,8 +110,7 @@ pm_dec = np.array(data.pmdec)
 
 pm_dec_error = np.array(data.pmdec_error)
 
-# print(pm_dec[0:100])
-
+# Right Ascension and Declination with errors
 rig_asc = np.array(data.ra)
 
 rig_asc_error = np.array(data.ra_error)
@@ -90,12 +119,11 @@ decl = np.array(data.dec)
 
 decl_error = np.array(data.dec_error)
 
-# define corrected parallax
-parallax_corr = parallax - parallax_zpt
+#
+'''Transformation of data'''
+#
 
-# print(pm_dec[0:10])
-
-print("Finished! Preparing to filter data...")
+print("Finished! Preparing to transform and filter data...")
 
 # filtered lists for later
 parallax_filter = []
@@ -121,8 +149,6 @@ pm_dec_error_filter = []
 # Define the velocity magnitude array
 vel_mag = np.sqrt(radial_velocity ** 2 + ((pm_ra / parallax) * mas_trafo) ** 2 \
         + ((pm_dec / parallax) * mas_trafo) ** 2)
-
-
 
 
 # converting the RA_Dec coordinates into Skycoord for plotting and transformations
@@ -341,8 +367,8 @@ print(len(parallax_filter))
 
 
 # produce a shorter file for long GAIA data files with only the fast stars
-np.savetxt("Revision_GAIA_only_fast_testtest.csv", [])
-f = open("Revision_GAIA_only_fast_testtest.csv", "w")
+np.savetxt("Revision_GAIA_with zpt.csv", [])
+f = open("Revision_GAIA_with_zpt.csv", "w")
 
 # write labels into first lines
 f.write("Standin-for-sourceID" + "," + "parallax" + "," + "parallax_zpt" + "," + "ra" + "," + "dec" + "," + "pmra" + "," + "pmdec" + "," + "radial_velocity" + "," +
