@@ -44,7 +44,7 @@ limits = 50
 '''CALCULATE ZERO-POINT PARALLAX'''
 #
 
-print("Reading input .csv file...)
+print("Reading input .csv file...")
 # read data from input .csv file
 data = pd.read_csv(args.path[0])
 
@@ -76,7 +76,7 @@ data.drop('astrometric_params_solved', axis=1, inplace=True)
 '''READ-OUT DATA FILES: '''
 #
 
-print("remaining data columns in panda frame", data.columns)
+print("Remaining data columns in panda frame", data.columns)
 
 print("Reading input Gaia data into np.arrays...")
 
