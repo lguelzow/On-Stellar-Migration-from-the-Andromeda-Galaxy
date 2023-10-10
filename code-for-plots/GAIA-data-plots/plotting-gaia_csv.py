@@ -106,10 +106,8 @@ andromeda_gal = SkyCoord(andromeda_pos[0], andromeda_pos[1], frame="galactic", u
 # Read out the data of all minimum distances from the file
 # comment in whichecer you need
 
-# data = pd.read_csv('/home/lguelzow/Nextcloud/MA/MA_Paper/GAIA/190_25percent_error/Revision_GAIA_only_fast_33.csv')
-data = pd.read_csv('/home/lguelzow/Nextcloud/MA/MA_Paper/GAIA/Revision_GAIA_only_fast_test.csv')
-# data = pd.read_csv('/home/lguelzow/Nextcloud/MA/MA_Paper/GAIA/145kms-new-filter/Paper_GAIA_only_fast_500.csv')
-# data = pd.read_csv('/home/lguelzow/Nextcloud/MA/MA_Paper/GAIA/190kms-analysis/Paper_GAIA_only_fast_500_2.csv')
+# data = pd.read_csv('/home/lguelzow/Nextcloud/MA/MA_Paper/GAIA/Revision_GAIA_only_fast_test.csv')
+data = pd.read_csv('./Revision_GAIA_with_zpt_error20.csv')
 
 print(data.columns)
 
@@ -414,7 +412,7 @@ kart_trajectory = np.array([None] * (len(gaia_vel_filter)))
 kart_trajectory_gal_rest = np.array([[kart_posi_filter[i][0], kart_posi_filter[i][1], kart_posi_filter[i][2], \
                                      (gaia_vel[i][0] + sun_vel[0])  * trafo * scale, (gaia_vel[i][1] + sun_vel[1])  * trafo * scale, (gaia_vel[i][2] + sun_vel[2]) * trafo * scale] 
                                      for i in range(len(gal_rest_vel_filter))])
-print(kart_trajectory_gal_rest)
+# print(kart_trajectory_gal_rest)
 
 # lists for velocities in Toomre diagram of velocities
 toomre_vel_perpendicular = [None] * (len(gaia_vel_filter))
@@ -537,7 +535,7 @@ random_selection = np.full(len(kart_trajectory), False)
 random_selection[:100] = True
 
 np.random.shuffle(random_selection)
-print(random_selection)
+# print(random_selection)
 
 # kartesian plot of star positions and velocities
 # for 13kpc  ([300:450])
@@ -743,15 +741,15 @@ cm = matplotlib.cm.plasma
 c = gal_rest_vel_filter
 sm = matplotlib.cm.ScalarMappable(cmap=cm, norm=norm)
 sm.set_array([])'''
-c = kart_posi_filter[:, 2]
+c = kart_posi_filter[:, 2] # vel_mag_criterium
 # main scatter plot
 proj_stars = ax.scatter(kart_posi_filter[:, 1], kart_posi_filter[:, 0] - x_GC,
-               s=3, c=c, cmap=cm, vmin=-35, vmax=35) # , label=r'Gaia stars ($v_{GC}>500\,\mathrm{km/s})$')
+               s=3, c=c, cmap=cm, vmin=-20, vmax=20)
 ax.scatter(0, 0, s=50, color='black', label='Galactic Centre', marker='*')
 ax.scatter(0,  -x_GC, s=40, color='black', label='Sun', marker='^')
 # add circles of equal velocity to plot
 circle_sun1 = plt.Circle((0, 0), 10, color='black', fill=False, linestyle='--')
-circle_inner = plt.Circle((0, 0), 25, color='black', fill=False, linestyle='--')
+circle_inner = plt.Circle((0, 0), 20, color='black', fill=False, linestyle='--')
 # circle_mid = plt.Circle((0, 0), 30, color='black', fill=False, linestyle='--')
 circle_outer = plt.Circle((0, 0), 50, color='black', fill=False, linestyle='--')
 ax.add_artist(circle_sun1)
@@ -764,7 +762,7 @@ def text(x, y, text):
             ha='left', va='center', color='black', fontsize=8.5, weight='bold')
 text(-40.5, 27, '50 kpc')
 # text(-24.5, 16.333333, '30 kpc')
-text(-20, 13.333333, '25 kpc')
+text(-16, 10.6666666, '20 kpc')
 text(-7.5, 5, '10 kpc')
 
 # add colorbar
@@ -772,8 +770,8 @@ plt.colorbar(proj_stars, label='Elevation above Galactic plane [kpc]', cax=cax) 
 # formatting
 ax.set_xlabel('Distance [kpc]')
 ax.set_ylabel('Distance [kpc]')
-ax.set_xlim(-51, 51)
-ax.set_ylim(-34, 34)
+ax.set_xlim(-20.3, 20.3)
+ax.set_ylim(-20.3, 13)
 ax.set_aspect('equal')
 ax.legend(loc='upper right')
 plt.savefig("GAIA-Star-pos-projection.pdf")
