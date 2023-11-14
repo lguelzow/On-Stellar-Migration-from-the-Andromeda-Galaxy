@@ -729,8 +729,8 @@ plt.savefig("GAIA-Star_distribution_skymap_heatmap.pdf")
 
 # Projection plot of star positions within the Milky Way
 plt.figure(91)
-plt.rcParams['font.size'] = 12
-plt.title('Positions of Gaia stars with $v_\mathrm{GC}>500\,\mathrm{kms}^{-1}$\n Distance to Sun $r_\mathrm{Sun}<40\,\mathrm{kpc}$\n Projected onto the Galactic disc')
+plt.rcParams['font.size'] = 11
+plt.title('Positions of Gaia DR3 stars with $v_\mathrm{GC}>500\,\mathrm{kms}^{-1}$\n Projected on to the Galactic disc')
 ax = plt.gca()
 divider = make_axes_locatable(ax)
 cax = divider.append_axes("right", size="3%", pad=0.03)
@@ -744,7 +744,7 @@ sm.set_array([])'''
 c = kart_posi_filter[:, 2] # vel_mag_criterium
 # main scatter plot
 proj_stars = ax.scatter(kart_posi_filter[:, 1], kart_posi_filter[:, 0] - x_GC,
-               s=3, c=c, cmap=cm, vmin=-20, vmax=20)
+               s=.5, c=c, cmap=cm, vmin=-20, vmax=20)
 ax.scatter(0, 0, s=50, color='black', label='Galactic Centre', marker='*')
 ax.scatter(0,  -x_GC, s=40, color='black', label='Sun', marker='^')
 # add circles of equal velocity to plot
@@ -786,7 +786,7 @@ hp.mollview(map,xsize=NSide)'''
 
 hpx_map = cat2hpx(rig_asc_filter[:], decl_filter[:], nside=2 ** 5, radec=True)
 hp.mollview(hpx_map+1, norm='log', unit='# of stars in bin (log. scale)', \
-     title='Spatial distribution of stars from GAIA DR3 in Gal. coordinates\n  with $v_\mathrm{GC}>500\,\mathrm{kms}^{-1}$ and $r_\mathrm{Sun}<40\,\mathrm{kpc}$', cmap='plasma')
+     title='Spatial distribution of stars from GAIA DR3\n in Gal. coordinates with $v_\mathrm{GC}>500\,\mathrm{kms}^{-1}$', cmap='plasma')
 plt.rcParams['font.size'] = 12
 plt.savefig("GAIA-Mollview.pdf")
 plt.show()
@@ -800,8 +800,8 @@ plt.close()
 hpx_map = cat2hpx(galactic_vel_l[:], galactic_vel_b[:], nside=2 ** 5, radec=False)
 # hpx_map = cat2hpx(helio_vel_l[:], helio_vel_b[:], nside=2 ** 5, radec=False)
 hp.mollview(hpx_map+1, flip='geo', norm='log', unit='# of stars in bin (log. scale)', \
-     title='Velocity direction distribution of stars from GAIA DR3 in Gal. coordinates\n with $v_\mathrm{GC}>500\,\mathrm{kms}^{-1}$ and $r_\mathrm{GC}<50\,\mathrm{kpc}$', cmap='plasma')
-plt.rcParams['font.size'] = 12
+     title='Velocity direction distribution of stars from GAIA DR3\n in Gal. coordinates with $v_\mathrm{GC}>500\,\mathrm{kms}^{-1}$', cmap='plasma')
+plt.rcParams['font.size'] = 13
 plt.savefig("GAIA-Mollview_vel.pdf")
 
 # transform to spherical coordinates = [gal_l, gal_b]
@@ -815,6 +815,7 @@ galactic_rest_v = SkyCoord(galactic_vel_l[:] * u.degree, galactic_vel_b[:] * u.d
 
 # plot distribution of velocity directions at minimum distance as a skymap
 plt.figure(11)
+plt.rcParams['font.size'] = 12
 ax2 = plt.subplot(111, projection='aitoff', label='velocity')
 ax2.grid(True)
 # colormap
@@ -824,8 +825,8 @@ c = vel_mag_criterium
 sm = matplotlib.cm.ScalarMappable(cmap=cm, norm=norm)
 sm.set_array([])
 
-star_vel = ax2.scatter(gal_v.l.wrap_at('180d').radian,
-                       gal_v.b.radian, s=5, color=cm(norm(c)), alpha=0.7, label=None)
+star_vel = ax2.scatter(gal_v_rest_frame.l.wrap_at('180d').radian,
+                       gal_v_rest_frame.b.radian, s=0.5, color=cm(norm(c)), alpha=0.7, label=None)
 # ax2.scatter(gal_v_rest_frame.l.wrap_at('180d').radian, gal_v_rest_frame.b.wrap_at('180d').radian, s=2, color=cm(norm(c)), alpha=0.7, label=None)
 plt.colorbar(sm, label='Galactocentric Velocity [km/s]', fraction=0.03, pad=0.04)
 ax2.legend(loc='upper right')
