@@ -26,11 +26,11 @@ G = 4.49948902 * 10 ** (-12)  # rescaled grav. constant [kpc^3/(Myr^2 * M_o)]
 
 # individual masses of each galaxy [M_o]
 # need to define reduced mass if masses aren't the same
-# M1 = 0.8 * 10 ** 12   # Mass of Milky Way
-# M2 = 0.8 * 10 ** 12  # Mass of Andromeda
+M1 = 0.8 * 10 ** 12   # Mass of Milky Way
+M2 = 0.8 * 10 ** 12  # Mass of Andromeda
 
-M1 = 0.615 * 10 ** 12  # mass of the Milky Way
-M2 = 1.13888888 * 10 ** 12  # mass of Andromeda
+# M1 = 0.615 * 10 ** 12  # mass of the Milky Way
+# M2 = 1.13888888 * 10 ** 12  # mass of Andromeda
 
 
 #

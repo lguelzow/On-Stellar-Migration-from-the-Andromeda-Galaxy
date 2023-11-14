@@ -175,7 +175,8 @@ minimum.write("# Min_dist_to_MW[kpc]" + " " + "Corr_dist_to_Sun[kpc]" + " " + "T
 #
 
 # Read the data of the movement of Andromeda from data file
-readout1 = np.loadtxt('/home/lguelzow/same-mass/M31-trajectory-same-mass.txt', dtype=np.str)
+# readout1 = np.loadtxt('/home/lguelzow/same-mass/M31-trajectory-same-mass.txt', dtype=np.str)
+readout1 = np.loadtxt('/home/lguelzow/paper_update/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-code/M31-trajectory.txt', dtype=np.str)
 # option for HPC array and the specific filesystem
 # readout1 = np.loadtxt('/upb/departments/pc2/users/h/hypvel02/Python_files/new_test/M31-position.txt', dtype=np.str)
 

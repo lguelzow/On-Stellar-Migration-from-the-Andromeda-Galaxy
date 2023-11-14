@@ -250,7 +250,7 @@ for i in range(ini_con):
 #
 '''PLOTTING:'''
 #
-
+'''
 # optional plots for inital velocity, time and directions
 
 # plot distribution of radii
@@ -285,7 +285,7 @@ plt.xlim(0, 35)
 plt.ylim(200, 900)
 plt.show()
 
-'''
+
 # kartesian plot of star positions and velocities
 X, Y, Z, U, V, W = zip(*test_plot[0:100])
 
