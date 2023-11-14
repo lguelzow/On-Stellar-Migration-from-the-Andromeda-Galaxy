@@ -2,8 +2,8 @@
 
 import numpy as np
 import random as rng
-# import matplotlib.pyplot as plt
-# from matplotlib.ticker import PercentFormatter
+import matplotlib.pyplot as plt
+from matplotlib.ticker import PercentFormatter
 # import scipy.integrate as integrate
 
 
@@ -53,7 +53,7 @@ rho_0 = (5 / 6) * (6 * mass_and / (4 * np.pi * (R_s ** 3))) * \
 # maximum baryon density of cluster, calculated from Plummer model: rho(r = 0) [M_o / kpc^3]
 rho_max = (3 * mass_and) / (4 * np.pi * plum_r ** 3) * (1 ** (-5 / 2))
 
-# fit parameter (find out physical meaning)
+# fit parameter (velocity scale)
 # sigma_v = 90
 sigma_v = 59.8842261
 
@@ -128,9 +128,22 @@ def escape_vel(r):
 
 
 # define function for generation of initial velocities based on the local escape velocity
-def ini_vel(v_esc, rng_star):
+def ini_vel_old(v_esc, rng_star):
 
     v = v_esc - (sigma_v * (np.log(rng_star) + np.log(sigma_v)))
+    return v
+
+# inverse sampling the CDF of the exponential distribution
+def ini_vel_exp(v_esc):
+
+    v = v_esc - (sigma_v * np.log(1 - rng.random()))
+    return v
+
+# alternative function where probability for high velocities decreases like a power law
+# inverse sample the CDF
+def ini_vel_power_law(v_esc):
+
+    v = v_esc * (1 / (1 - rng.random())) ** (1 / (3.9))
     return v
 
 
@@ -172,16 +185,17 @@ send_off_times = [rng.uniform(10000, 12000) for i in range(ini_con)]
 
 # generate list of escape velocities corresponding to r_coord list
 v_esc_list = [escape_vel(r_coord[i]) for i in range(ini_con)]
-# v_esc_list = [np.sqrt(2 * abs(escape_energy[i])) /
-#              trafo for i in range(ini_con)]
 
+# print(v_esc_list[0:10])
 
 # generate list of initial velocity magnitudes
-mag_vel = [trafo * ini_vel(v_esc_list[i], star_number * rng.random())
-           for i in range(ini_con)]
+# mag_vel = [trafo * ini_vel_old(v_esc_list[i], star_number * rng.random()) for i in range(ini_con)]
 
-mag_vel_test = [mag_vel[i] /
-                trafo for i in range(ini_con)]  # if mag_vel[i] / trafo > 800]
+# generate list of initial velocity magnitudes
+mag_vel = [trafo * ini_vel_power_law(v_esc_list[i]) for i in range(ini_con)]
+
+mag_vel_test = [mag_vel[i] / trafo 
+                    for i in range(ini_con)]  # if mag_vel[i] / trafo > 800]
 
 # print(len(mag_vel_test))
 
@@ -236,30 +250,29 @@ for i in range(ini_con):
 #
 '''PLOTTING:'''
 #
-'''
+
 # optional plots for inital velocity, time and directions
 
 # plot distribution of radii
 plt.figure(1)
 # plt.hist(test_plot, 30)
-plt.hist(r_coord, bins=75,  weights=np.ones(ini_con) / ini_con)
+plt.hist(r_coord, bins=75)
 plt.xlabel('Initial radius [kpc]')
 plt.ylabel('% of test stars')
-plt.yscale('log')
+# plt.yscale('log')
 # plt.xlim(0, 10)
-plt.gca().yaxis.set_major_formatter(PercentFormatter(1))
 plt.savefig('initial_rad.pdf')
 
 
 # plot distribution of initial velocities
 plt.figure(2)
 # plt.hist(test_plot, 30)
-plt.hist(mag_vel_test, bins=75,  weights=np.ones(ini_con) / ini_con)
+plt.hist(mag_vel_test, bins=1000)
 plt.xlabel('Initial velocity magnitude [km/s]')
 plt.ylabel('% of test stars')
 # plt.yscale('log')
-plt.xlim(400, 1800)
-plt.gca().yaxis.set_major_formatter(PercentFormatter(1))
+# plt.xscale('log')
+plt.xlim(400, 2500)
 plt.savefig('initial_vel_mag.pdf')
 
 
@@ -272,7 +285,7 @@ plt.xlim(0, 35)
 plt.ylim(200, 900)
 plt.show()
 
-
+'''
 # kartesian plot of star positions and velocities
 X, Y, Z, U, V, W = zip(*test_plot[0:100])
 
