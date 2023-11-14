@@ -173,7 +173,7 @@ theta_coord = [np.arccos(rng.uniform(-1, 1)) for i in range(ini_con)]
 # generate list of random send-off times[Myrs]
 # vary initial send-off time for different Andromeda masses
 # 10000 Myrs for m=1.13 Mo AND 10500 Myrs for m=0.9 Mo
-send_off_times = [rng.uniform(10000, 12000) for i in range(ini_con)]
+send_off_times = [rng.uniform(10000, 13000) for i in range(ini_con)]
 # print(theta_test)
 
 
