@@ -10,7 +10,7 @@
 #SBATCH --mail-user=lguelzow@physik.uni-bielefeld.de
 #SBATCH --job-name=hyp_vel_same-mass
 #SBATCH --time=16:00:00
-#SBATCH --array=73-84
+#SBATCH --array=21-40
 #SBATCH --gres=gpu:0
 #SBATCH --gpus=0
 echo "Program start: $(date)"
@@ -20,7 +20,7 @@ source /home/lguelzow/hyp_vel/bin/activate
 
 mkdir Results_$id
 cd Results_$id
-python3 -u "/home/lguelzow/same-mass/RNG-IC-List.py"
-time python3 -u "/home/lguelzow/same-mass/HVS-SIM-paper-final.py"
+python3 -u "/home/lguelzow/paper_update/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-code/RNG_initial_conditions.py"
+time python3 -u "/home/lguelzow/paper_update/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-code/HVS_trajectory_simulation.py"
 
 echo "Program end: $(date)"
