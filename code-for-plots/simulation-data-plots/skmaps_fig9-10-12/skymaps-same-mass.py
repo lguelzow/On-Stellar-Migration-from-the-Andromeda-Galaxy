@@ -34,8 +34,8 @@ andromeda_gal = SkyCoord(
 
 # readout process nr 1
 # Read out the data of all distances at t_0
-# readout1 = np.loadtxt('all-min-distances-to-sun.txt', dtype=np.str)
-readout1 = np.loadtxt('present-time-same-mass.txt', dtype=np.str)
+readout1 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/power_law_test/combined/present-time-power-law.txt', dtype=np.str)
+# readout1 = np.loadtxt('present-time-same-mass.txt', dtype=np.str)
 
 # Convert the whole table into an array of strings
 dist1 = np.array(readout1)
@@ -118,7 +118,7 @@ present_galcentre = SkyCoord(
 # readout process nr 1
 # Read out the data of all distances at t_0
 # readout1 = np.loadtxt('all-min-distances-to-sun.txt', dtype=np.str)
-readout2 = np.loadtxt('minimum-distances-same-mass.txt', dtype=np.str)
+readout2 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/power_law_test/combined/present-time-power-law.txt', dtype=np.str)
 
 # Convert the whole table into an array of strings
 dist2 = np.array(readout2)

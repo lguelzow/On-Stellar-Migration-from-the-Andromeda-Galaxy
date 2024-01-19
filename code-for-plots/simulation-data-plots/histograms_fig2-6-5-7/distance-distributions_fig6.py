@@ -38,7 +38,8 @@ andromeda_gal = SkyCoord(
 # readout process nr 1
 # Read out the data of all distances at t_0
 # readout1 = np.loadtxt('all-min-distances-to-sun.txt', dtype=np.str)
-readout1 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/HPC_Results/Plotting/present-time-half-mass.txt', dtype=np.str)
+# readout1 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/power_law_test/combined/present-time-power-law.txt', dtype=np.str)
+readout1 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/no_plummer_test/present-time-no-plummer.txt', dtype=np.str)
 
 # Convert the whole table into an array of strings
 dist1 = np.array(readout1)
@@ -49,7 +50,9 @@ present_distance_half = [float(dist1[x, 0]) for x in range(len(dist1))]
 
 # readout process nr 2
 # Read out the data of all distances at minimum distance
-readout2 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/HPC_Results/Plotting/minimum-distances-half-mass.txt', dtype=np.str)
+# readout2 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/HPC_Results/Plotting/minimum-distances-half-mass.txt', dtype=np.str)
+# readout2 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/power_law_test/combined/minimum-distances-power-law.txt', dtype=np.str)
+readout2 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/no_plummer_test/minimum-distances-no-plummer.txt', dtype=np.str)
 
 # Convert the whole table into an array of strings
 dist2 = np.array(readout2)
@@ -63,7 +66,8 @@ min_distance_half = [float(dist2[x, 0]) for x in range(len(dist2))]
 # readout process nr 3
 # Read out the data of all distances at t_0
 # readout1 = np.loadtxt('all-min-distances-to-sun.txt', dtype=np.str)
-readout3 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/HPC_Results/Plotting/present-time-same-mass.txt', dtype=np.str)
+# readout3 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/power_law_test/combined/present-time-power-law.txt', dtype=np.str)
+readout3 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/no_plummer_test/present-time-no-plummer.txt', dtype=np.str)
 
 # Convert the whole table into an array of strings
 dist3 = np.array(readout3)
@@ -74,7 +78,8 @@ present_distance_same = [float(dist3[x, 0]) for x in range(len(dist3))]
 
 # readout process nr 4
 # Read out the data of all distances at minimum distance
-readout4 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/HPC_Results/Plotting/minimum-distances-same-mass.txt', dtype=np.str)
+# readout4 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/power_law_test/combined/minimum-distances-power-law.txt', dtype=np.str)
+readout4 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/no_plummer_test/minimum-distances-no-plummer.txt', dtype=np.str)
 
 # Convert the whole table into an array of strings
 dist4 = np.array(readout4)

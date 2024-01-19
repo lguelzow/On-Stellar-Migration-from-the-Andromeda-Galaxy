@@ -16,7 +16,7 @@ from lmfit import (Minimizer, Parameters, conf_interval, conf_interval2d,
 # Read out the data from the result file
 # readout = np.loadtxt('smallest_min_distances_total.txt', dtype=np.str)
 # readout = np.loadtxt('Marchetti_v_data.txt', dtype=np.str)
-readout = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_calcs/Marchetti-data/Marchetti_v_data.txt', dtype=str)
+readout = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/code-for-plots/reproduction-of-Marchetti-paper-plot/Marchetti_v_data.csv', dtype=str)
 
 # Convert the whole table into an array of strings
 result = np.array(readout)
@@ -68,7 +68,8 @@ andromeda_gal = SkyCoord(
 # readout process nr 1
 # Read out the data of all distances at t_0
 # readout1 = np.loadtxt('minimum-distances-same-mass.txt', dtype=str)
-readout1 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/HPC_Results/Plotting/present-time-same-mass.txt', dtype=str)
+# readout1 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/power_law_test/combined/present-time-power-law.txt', dtype=np.str)
+readout1 = np.loadtxt('/home/lguelzow/Nextcloud/MA/MA_Paper/Paper_github/On-Stellar-Migration-from-the-Andromeda-Galaxy/simulation-results/no_plummer_test/present-time-no-plummer.txt', dtype=np.str)
 
 # Convert the whole table into an array of strings
 dist1 = np.array(readout1)
