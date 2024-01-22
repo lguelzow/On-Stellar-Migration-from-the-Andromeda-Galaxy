@@ -10,7 +10,7 @@
 #SBATCH --mail-user=lguelzow@physik.uni-bielefeld.de
 #SBATCH --job-name=hyp_vel_same-mass
 #SBATCH --time=16:00:00
-#SBATCH --array=21-40
+#SBATCH --array=61-72
 #SBATCH --gres=gpu:0
 #SBATCH --gpus=0
 echo "Program start: $(date)"
